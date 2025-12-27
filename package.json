@@ -1,0 +1,13 @@
+{
+  "name": "claude-github-action-example",
+  "version": "1.0.0",
+  "description": "示例项目：展示如何使用 Claude Code GitHub Actions",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src/"
+  },
+  "keywords": ["claude", "github-actions", "example"],
+  "author": "",
+  "license": "MIT"
+}

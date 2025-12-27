@@ -1,0 +1,51 @@
+# 基础的 Claude Code GitHub Actions 配置
+# 这个 workflow 会在 PR 或 Issue 评论中使用 @claude 时触发
+
+name: Claude Code - 基础响应
+
+on:
+  # 当在 Issue 或 PR 中创建新评论时触发
+  issue_comment:
+    types: [created]
+  # 当在 PR 的 review 评论中创建评论时触发
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  claude:
+    name: Claude 响应
+    runs-on: ubuntu-latest
+
+    # 只有在评论包含 @claude 时才运行
+    if: contains(github.event.comment.body, '@claude')
+
+    steps:
+      - name: Checkout 代码
+        uses: actions/checkout@v4
+
+      - name: 运行 Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          # 从 GitHub Secrets 中获取 API Key
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Claude 最多对话 5 轮
+          claude_args: "--max-turns 5"
+
+  # 可选：自动代码审查
+  code-review:
+    name: 自动代码审查
+    runs-on: ubuntu-latest
+    # 只在 PR 打开或更新时运行
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout 代码
+        uses: actions/checkout@v4
+
+      - name: 运行代码审查
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # 使用 /review 斜杠命令
+          prompt: "/review"
+          claude_args: "--max-turns 3"
