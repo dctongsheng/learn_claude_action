@@ -1,0 +1,29 @@
+# 简单的配置测试 workflow
+# 用于验证 API Key 和基本配置是否正确
+
+name: 测试 Claude 配置
+
+on:
+  # 手动触发
+  workflow_dispatch:
+
+jobs:
+  test-api-key:
+    name: 测试 API Key 配置
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 代码
+        uses: actions/checkout@v4
+
+      - name: 测试简单的 Claude 调用
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            请简单回复："配置成功！Claude API Key 工作正常。"
+            这是一个测试，不需要修改任何代码。
+          claude_args: "--max-turns 1"
+
+      - name: 测试完成
+        run: echo "✅ API Key 测试完成"
