@@ -14,6 +14,12 @@ on:
         description: 'Issue 编号'
         required: false
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   # 首先运行测试
   run-tests:

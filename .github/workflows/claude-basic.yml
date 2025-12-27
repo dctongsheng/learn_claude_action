@@ -18,6 +18,12 @@ on:
         required: false
         default: '@claude 你好，这是一个测试'
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   claude:
     name: Claude 响应

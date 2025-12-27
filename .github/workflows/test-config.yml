@@ -7,6 +7,12 @@ on:
   # 手动触发
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   test-api-key:
     name: 测试 API Key 配置
